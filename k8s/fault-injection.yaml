@@ -1,0 +1,38 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: phpeste-vs
+spec:
+  hosts: 
+  - phpeste-service.default.svc.cluster.local
+  http:
+    - fault:
+        delay:
+          fixedDelay: 10s
+          percentage:
+            value: 50
+        abort:
+          httpStatus: 504
+          percentage:
+            value: 10
+      route:  
+      - destination:
+          host: phpeste-service
+          subset: all
+
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: phpeste-dr
+spec:
+  host: phpeste-service
+  trafficPolicy:
+    loadBalancer:
+      consistentHash:
+        httpHeaderName: "x-user"
+  subsets:
+    - name: all
+      labels:
+        app: nginx

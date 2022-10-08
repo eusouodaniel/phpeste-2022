@@ -1,0 +1,14 @@
+{
+    "name": "phpeste-2022",
+    "version": "1.0.0",
+    "description": "phpeste",
+    "main": "index.js",
+    "scripts": {
+      "dev": "node index.js"
+    },
+    "author": "eusouodaniel",
+    "license": "ISC",
+    "dependencies": {
+      "express": "^4.18.1"
+    }
+  }
